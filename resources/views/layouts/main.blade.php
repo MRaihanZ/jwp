@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    @if (Route::is(['home', 'detail', 'order']))
+    @if (Route::is(['home', 'detail', 'order', 'login']))
         @include('partials.navbar')
     @else
         @include('partials.adminNavbar')

@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'JeWePe - Login')
+@section('title', 'JeWePe - Update Catalog')
 @section('css')
 
 @endsection
@@ -9,19 +9,21 @@
             <!-- Form Header -->
             <div class="bg-white shadow-lg rounded-lg overflow-hidden">
                 <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
-                    <!-- The title can be dynamic: "Add New Item" or "Edit Item" -->
-                    <h2 class="text-2xl font-bold text-gray-800">Add New Item</h2>
-                    <p class="text-sm text-gray-600 mt-1">Fill out the form below to add a new product to the catalog.</p>
+                    <h2 class="text-2xl font-bold text-gray-800">Edit Item</h2>
+                    <p class="text-sm text-gray-600 mt-1">Fill out the form below to edit a new product to the catalog.</p>
                 </div>
 
                 <!-- Form -->
-                <form class="p-6 space-y-6">
+                <form class="p-6 space-y-6"method="POST"
+                    action="{{ route('admin.catalog.action.update', request()->route('slug')) }}"
+                    enctype="multipart/form-data">
+                    @csrf
                     <!-- Title -->
                     <div>
                         <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
                         <input type="text" id="title" name="title"
                             class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                            placeholder="e.g., Modern Watch">
+                            placeholder="title" value="{{ $item->title }}">
                     </div>
 
                     <!-- Description -->
@@ -29,7 +31,7 @@
                         <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
                         <textarea id="description" name="description" rows="4"
                             class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                            placeholder="Describe the product..."></textarea>
+                            placeholder="Describe the product...">{{ $item->description }}</textarea>
                     </div>
 
                     <!-- Price -->
@@ -41,7 +43,7 @@
                             </div>
                             <input type="number" id="price" name="price"
                                 class="block w-full pl-7 pr-12 py-2 border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                                placeholder="0.00">
+                                placeholder="0.00" value="{{ $item->price }}">
                             <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                 <span class="text-gray-500 sm:text-sm">IDR</span>
                             </div>
@@ -61,14 +63,13 @@
                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                                 <div class="flex text-sm text-gray-600">
-                                    <label for="file-upload"
+                                    <label for="image"
                                         class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
                                         <span>Upload a file</span>
-                                        <input id="file-upload" name="file-upload" type="file" class="sr-only">
                                     </label>
-                                    <p class="pl-1">or drag and drop</p>
+                                    <input id="image" name="image" type="file" accept="image/*">
                                 </div>
-                                <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+                                <p class="text-xs text-gray-500">PNG, JPG, GIF</p>
                             </div>
                         </div>
                     </div>
@@ -79,13 +80,15 @@
                         <div class="mt-2 space-y-2">
                             <div class="flex items-center">
                                 <input id="available" name="status" type="radio" value="available"
-                                    class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300" checked>
+                                    class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+                                    @if ($item->status === 'available') checked @endif>
                                 <label for="available"
                                     class="ml-3 block text-sm font-medium text-gray-700">Available</label>
                             </div>
                             <div class="flex items-center">
                                 <input id="unavailable" name="status" type="radio" value="unavailable"
-                                    class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
+                                    class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+                                    @if ($item->status === 'unavailable') checked @endif>
                                 <label for="unavailable"
                                     class="ml-3 block text-sm font-medium text-gray-700">Unavailable</label>
                             </div>
@@ -94,10 +97,10 @@
 
                     <!-- Action Buttons -->
                     <div class="flex justify-end pt-4">
-                        <button type="button"
+                        <a href="{{ route('admin.catalog') }}"
                             class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                             Cancel
-                        </button>
+                        </a>
                         <button type="submit"
                             class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                             Save

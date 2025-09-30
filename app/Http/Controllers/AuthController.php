@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Auth;
+use Illuminate\Support\Facades\Auth;
+use App\Models\AuthAdmin;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -14,28 +17,30 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        // Validate input
         $request->validate([
-            'username' => 'required',
-            'password' => 'required',
+            'username' => 'required|string',
+            'password' => 'required|string',
         ]);
 
-        // Use model method
-        $user = Auth::authenticate($request->username, $request->password);
+        $credentials = $request->only('username', 'password');
 
-        if ($user) {
-            $request->session()->put('user_id', $user->user_id);
-            $session = Auth::setSessionUserId($user->user_id, $request->session()->getId());
-            // dd($session);
-            return view('pages.admin.dashboard');
+        if (Auth::attempt($credentials)) {
+            // regenerate session id for security
+            $request->session()->regenerate();
+
+            return redirect()->intended('admin/dashboard');
         }
 
-        return back()->withErrors(['login' => 'Invalid username or password']);
+        return back()->withErrors([
+            'username' => 'Invalid username or password.',
+        ])->onlyInput('username');
     }
 
     public function logout(Request $request)
     {
-        $request->session()->forget('user_id');
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
         return redirect()->route('login')->with('success', 'Logged out successfully');
     }
 }

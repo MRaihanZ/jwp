@@ -12,9 +12,9 @@
                         class="text-gray-500 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Website</a>
                     <a href="/admin/catalog"
                         class="text-gray-500 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Katalog</a>
-                    <a href="/admin/orders"
+                    <a href="/admin/order"
                         class="text-gray-500 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Pesanan</a>
-                    <a href="/admin/logout"
+                    <a href="/logout"
                         class="text-gray-500 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Logout</a>
                 </div>
             </div>
@@ -27,7 +27,7 @@
                     class="text-gray-500 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Katalog</a>
                 <a href="/admin/orders"
                     class="text-gray-500 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Pesanan</a>
-                <a href="/admin/logout"
+                <a href="/logout"
                     class="text-gray-500 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Logout</a>
             </div>
         </div>

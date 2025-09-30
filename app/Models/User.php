@@ -33,6 +33,12 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    protected $table = 'users';        // table name
+    protected $primaryKey = 'user_id'; // set your custom primary key
+
+    public $incrementing = true;       // true if it's AUTO_INCREMENT
+    protected $keyType = 'int';        // int if it's integer
+
     /**
      * Get the attributes that should be cast.
      *

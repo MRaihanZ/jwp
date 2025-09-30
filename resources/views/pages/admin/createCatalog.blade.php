@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'JeWePe - Login')
+@section('title', 'JeWePe - Create Catalog')
 @section('css')
 
 @endsection
@@ -15,7 +15,9 @@
                 </div>
 
                 <!-- Form -->
-                <form class="p-6 space-y-6">
+                <form class="p-6 space-y-6" method="POST" action="{{ route('admin.catalog.action.create') }}"
+                    enctype="multipart/form-data">
+                    @csrf
                     <!-- Title -->
                     <div>
                         <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
@@ -61,14 +63,13 @@
                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                                 <div class="flex text-sm text-gray-600">
-                                    <label for="file-upload"
+                                    <label for="image"
                                         class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
                                         <span>Upload a file</span>
-                                        <input id="file-upload" name="file-upload" type="file" class="sr-only">
                                     </label>
-                                    <p class="pl-1">or drag and drop</p>
+                                    <input id="image" name="image" type="file" accept="image/*">
                                 </div>
-                                <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+                                <p class="text-xs text-gray-500">PNG, JPG, GIF</p>
                             </div>
                         </div>
                     </div>
@@ -94,10 +95,10 @@
 
                     <!-- Action Buttons -->
                     <div class="flex justify-end pt-4">
-                        <button type="button"
+                        <a href="{{ route('admin.catalog') }}"
                             class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                             Cancel
-                        </button>
+                        </a>
                         <button type="submit"
                             class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                             Save

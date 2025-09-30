@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'JeWePe - Login')
+@section('title', 'JeWePe - Catalog')
 @section('css')
 
 @endsection
@@ -33,61 +33,42 @@
                         </thead>
                         <tbody class="divide-y divide-gray-200">
                             <!-- Table Row 1 -->
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="flex items-center">
-                                        <div class="flex-shrink-0 h-10 w-10">
-                                            <img class="h-10 w-10 rounded-full object-cover"
-                                                src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80"
-                                                alt="Modern Watch">
+                            @foreach ($catalogs as $item)
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 h-10 w-10">
+                                                <img class="h-10 w-10 rounded-full object-cover" src="{{ $item->image }}"
+                                                    alt="{{ $item->title }}">
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">{{ $item->title }}</div>
+                                            </div>
                                         </div>
-                                        <div class="ml-4">
-                                            <div class="text-sm font-medium text-gray-900">Wedding Standard</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <span
-                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                        Available
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Rp50.000.000</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a href="/admin/catalog/update/1" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                                    <a href="/admin/catalog/delete/1" class="text-red-600 hover:text-red-900 ml-4"
-                                        onclick="deleteAlert()">Delete</a>
-                                </td>
-                            </tr>
-
-                            <!-- Table Row 2 -->
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="flex items-center">
-                                        <div class="flex-shrink-0 h-10 w-10">
-                                            <img class="h-10 w-10 rounded-full object-cover"
-                                                src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-                                                alt="Running Shoes">
-                                        </div>
-                                        <div class="ml-4">
-                                            <div class="text-sm font-medium text-gray-900">Wedding Premium</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <span
-                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                                        Unavailable
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Rp90.000.000</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a href="/edit/2" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                                    <a href="/delete/2" class="text-red-600 hover:text-red-900 ml-4">Delete</a>
-                                </td>
-                            </tr>
-
-                            <!-- Add more rows as needed -->
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        @if ($item->status === 'available')
+                                            <span
+                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                {{ $item->status }}
+                                            </span>
+                                        @else
+                                            <span
+                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                                {{ $item->status }}
+                                            </span>
+                                        @endif
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        Rp{{ number_format($item->price) }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <a href="/admin/catalog/update/{{ $item->catalog_id }}"
+                                            class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                        <a href="/admin/catalog/delete/{{ $item->catalog_id }}"
+                                            class="text-red-600 hover:text-red-900 ml-4" onclick="deleteAlert()">Delete</a>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

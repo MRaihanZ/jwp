@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         // User table
-        Schema::create('user', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->id('user_id');
             $table->string('name', 50);
             $table->string('username', 20);
@@ -27,7 +27,7 @@ return new class extends Migration
         });
 
         // Catalog table
-        Schema::create('catalog', function (Blueprint $table) {
+        Schema::create('catalogs', function (Blueprint $table) {
             $table->id('catalog_id');
             $table->unsignedBigInteger('user_id');
             $table->text('title');
@@ -48,7 +48,6 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id('order_id');
             $table->unsignedBigInteger('catalog_id');
-            $table->unsignedBigInteger('user_id');
             $table->string('name', 50);
             $table->text('email');
             $table->string('phone_number', 20);
@@ -69,7 +68,7 @@ return new class extends Migration
         });
 
         // Setting table
-        Schema::create('setting', function (Blueprint $table) {
+        Schema::create('settings', function (Blueprint $table) {
             $table->id('setting_id');
             $table->unsignedBigInteger('user_id');
             $table->text('website_name');
@@ -100,9 +99,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('setting');
+        Schema::dropIfExists('settings');
         Schema::dropIfExists('orders');
-        Schema::dropIfExists('catalog');
-        Schema::dropIfExists('user');
+        Schema::dropIfExists('catalogs');
+        Schema::dropIfExists('users');
     }
 };
